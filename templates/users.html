@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  {% for user in user_db %}
+      <a href="/users/{{ forloop.counter }}">{{ user }}번</a><br>
+  {% endfor %}
+
+</body>
+</html>

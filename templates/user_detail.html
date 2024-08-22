@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 상세 정보</title>
+</head>
+<body>
+    <h1>사용자 상세 정보</h1>
+    <h2>사용자 ID: {{ user_id }}</h2>
+    <ul>
+        {% for key, value in user.items %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
