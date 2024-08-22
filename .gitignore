@@ -1,0 +1,10 @@
+.idea/
+__pycache__/
+db.sqlite3
+migrations/
+secret.json
+*.env
+DS_Store
+fake_db.py
+.python-version
+.venv/
