@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>제목: {{ todo.title }}</h1>
+    <h2>오늘의 할일: {{ todo.description }}</h2>
+    <p>시작날짜: {{ todo.start_date }}</p>
+    <p>종료날짜: {{ todo.end_date }}</p>
+    {% if todo.is_completed == 0%}
+        <p>미완료</p>
+    {% else %}
+        <p>완료</p>
+    {% endif %}
+
+</body>
+</html>

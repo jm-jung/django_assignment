@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+</head>
+<body>
+    <h1>Todo List</h1>
+    {% if todos %}
+        {% for todo in todos %}
+            <a href="{% url 'todo_info' todo.id %}">{{ todo.title }}</a><br>
+        {% endfor %}
+    {% else %}
+        <p>No todos available.</p>
+    {% endif %}
+</body>
+</html>
