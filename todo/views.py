@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from .models import Todo
@@ -6,7 +7,7 @@ def todo(request):
     todos=Todo.objects.all()
     context={'todos':todos}
     return render(request,'todo.html',context)
-
+@login_required
 def todo_info(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id)
     context = {'todo': todo}
