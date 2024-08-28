@@ -1,31 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Todo List</title>
-</head>
-<body>
-    <div style="text-align: right">
-        {% if request.user.is_authenticated%}
-            <form action="{% url 'logout' %}" method="POST">
-                {% csrf_token %}
-                <button>로그아웃</button>
-            </form>
-            <p>안녕하세요! {{ request.user.username }}님!</p>
-        {% else %}
-            <a href="{% url 'login' %}"><button>로그인</button></a>
-            <a href="{% url 'signup' %}"><button>회원가입</button></a>
-        {% endif %}
-        
-    </div>
+{% extends 'base.html' %}
+{% block content %}
     <h1>Todo List</h1>
-    {% if todos %}
-        {% for todo in todos %}
-            <a href="{% url 'todo_info' todo.id %}">
-                {{ todo.title }}</a><br>
-        {% endfor %}
-    {% else %}
-        <p>No todos available.</p>
-    {% endif %}
-</body>
-</html>
+    {% for todo in page_object %}
+        <a href="{% url 'todo_info' todo.id %}">
+            {{ todo.title }}</a><br>
+    {% endfor %}
+     <a href="{% url 'todo_create' %}"><button>글쓰기</button></a>
+    <form method="get" style="margin-bottom: 10px;">
+    <input name="q" type="text" placeholder="검색어를 입력하세요." value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}">
+    <button>검색</button>
+    </form>
+{% endblock %}

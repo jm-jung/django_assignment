@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div style="text-align: right">
+        {% if request.user.is_authenticated%}
+            <form action="{% url 'logout' %}" method="POST">
+                {% csrf_token %}
+                <button>로그아웃</button>
+            </form>
+            <p>안녕하세요! {{ request.user.username }}님!</p>
+        {% else %}
+            <a href="{% url 'login' %}"><button>로그인</button></a>
+            <a href="{% url 'signup' %}"><button>회원가입</button></a>
+        {% endif %}
+        
+    </div>
+{% block content %}{% endblock %}
+</body>
+</html>
