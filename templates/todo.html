@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Todo List</h1>
-    {% for todo in page_object %}
-        <a href="{% url 'todo_info' todo.id %}">
+    {% for todo in object_list %}
+        <a href="{% url 'todo:info' todo.id %}">
             {{ todo.title }}</a><br>
     {% endfor %}
-     <a href="{% url 'todo_create' %}"><button>글쓰기</button></a>
-    <form method="get" style="margin-bottom: 10px;">
-    <input name="q" type="text" placeholder="검색어를 입력하세요." value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}">
-    <button>검색</button>
+     <a href="{% url 'todo:create' %}"><button>글쓰기</button></a>
+    <form method="get" class="my-3 d-flex">
+    <input class="form-control-sm" name="q" type="text" placeholder="검색어를 입력하세요." value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}">
+    <button class="btn btn-sm btn-info ms-2">검색</button>
     </form>
+    {% include 'pagination.html' %}
 {% endblock %}
