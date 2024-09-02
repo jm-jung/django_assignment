@@ -1,4 +1,5 @@
 from django import forms
+from django_summernote.widgets import SummernoteWidget
 
 from todo.models import Todo, Comment
 
@@ -7,12 +8,15 @@ class TodoForm(forms.ModelForm):
 
     class Meta:
         model=Todo
-        fields=('title','description','start_date','end_date')
+        fields=('title','description','image','start_date','end_date')
+        widgets={
+            'description':SummernoteWidget(),
+        }
 
 class TodoUpdateForm(forms.ModelForm):
     class Meta:
         model = Todo
-        fields = ["title", "description", "start_date", "end_date", "is_completed"]
+        fields = ("title", "description","image","start_date", "end_date", "is_completed")
 
 
 class CommentForm(forms.ModelForm):
