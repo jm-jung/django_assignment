@@ -33,6 +33,10 @@ class TodoDetailView(LoginRequiredMixin, ListView):
     def get(self,request,*args,**kwargs):
         self.object=get_object_or_404(Todo,pk=kwargs.get('todo_pk'))
         return super().get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return self.model.objects.filter(todo=self.object).prefetch_related('user')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form']=CommentForm()
@@ -60,12 +64,15 @@ class TodoUpdateView(LoginRequiredMixin, UpdateView):
     model = Todo
     template_name = 'todo_form.html'
     form_class = TodoForm
-    def get_object(self):
+    def get_queryset(self):
         queryset = super().get_queryset()
         if self.request.user.is_superuser:
             return queryset
         return queryset.filter(author=self.request.user)
 
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         context['sub_title']='수정'
