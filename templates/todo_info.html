@@ -17,4 +17,49 @@
         <button>삭제</button>
         </form>
     {% endif %}
+    <p>
+        작성자: {{ todo.author }}<br>
+        <hr>
+        {{ blog.content | safe }}<br>
+
+    </p>
+
+    <hr>
+    {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'todo:comment_create' todo.pk %}">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+        <div class="text-end">
+            <button class="btn btn-primary">등록</button>
+        </div>
+        </form>
+    {% endif %}
+    <div class="mb-2" id="comment_wrapper">
+{% for comment in todo.comments.all %}
+    <div class="comment" id="comment-{{ comment.pk }}">
+        {% if form and comment.pk == form.instance.pk %}
+            <form method="post" action="{% url 'todo:comment_update' comment.pk %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-sm btn-success">저장</button>
+                <a href="{% url 'todo:info' todo_pk=todo.pk %}" class="btn btn-sm btn-secondary">취소</a>
+            </form>
+        {% else %}
+            <p>{{ comment.message }}</p>
+            <small>작성자: {{ comment.user.username }}, 작성일: {{ comment.created_at }}</small>
+            {% if user == comment.user %}
+                <a href="{% url 'todo:comment_update' comment.pk %}" class="btn btn-sm btn-primary">수정</a>
+                <form method="post" action="{% url 'todo:comment_delete' comment.pk %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('정말로 이 댓글을 삭제하시겠습니까?');">삭제</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endfor %}
+    </div>
+
+    {% include 'pagination.html' with fragment='comment_wrapper' %}
+    <a href="{% url 'todo:list'%}" class="btn btn-sm btn-info">목록으로 돌아가기</a>
+
 {% endblock %}
